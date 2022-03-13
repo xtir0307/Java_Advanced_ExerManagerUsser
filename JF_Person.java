@@ -6,6 +6,8 @@ package Theory_JavaAdv;
 
 import java.nio.file.Files;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.processing.Messager;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -132,16 +134,13 @@ public class JF_Person extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_add)
-                            .addComponent(btn_edit)
-                            .addComponent(btn_delete)
-                            .addComponent(btn_refresh))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_signout)
-                        .addContainerGap())))
+                    .addComponent(btn_add)
+                    .addComponent(btn_edit)
+                    .addComponent(btn_delete)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btn_signout, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btn_refresh)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(262, 262, 262)
                 .addComponent(jLabel1)
@@ -160,7 +159,7 @@ public class JF_Person extends javax.swing.JFrame {
                         .addComponent(btn_edit)
                         .addGap(35, 35, 35)
                         .addComponent(btn_delete)
-                        .addGap(30, 30, 30)
+                        .addGap(33, 33, 33)
                         .addComponent(btn_refresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_signout))
@@ -200,11 +199,18 @@ public class JF_Person extends javax.swing.JFrame {
 
     private void tbl_PersonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_PersonMouseClicked
         // TODO add your handling code here:
-        int row_idx = tbl_Person.getSelectedRow();
-        String id = tbl_Person.getModel().getValueAt(row_idx, 0).toString();
-    
-        this.id = Integer.valueOf(id);
+        int row = tbl_Person.getSelectedRow();
+        String username = tbl_Person.getModel().getValueAt(row, 0).toString();
+        ResultSet rs = pcl.getByUser(username);
+        try {
+            while(rs.next()) {
+                this.id = Integer.valueOf(rs.getString("id"));   
+            }
+
         System.out.println(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(JF_Person.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_tbl_PersonMouseClicked
 
     private void btn_signoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_signoutActionPerformed

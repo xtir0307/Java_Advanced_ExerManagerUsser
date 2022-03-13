@@ -229,11 +229,11 @@ public class JF_Signup extends javax.swing.JFrame {
         getData();
         if(pcl.countRowbyUser(username) == 0) {
             pcl.insert(username, password, firstname, lastname, gender, phonenumber, email);
-            lb_note.setText("Đăng ký thành công");
+            lb_note.setText("Sign up succesfully");
             new JF_Login().setVisible(true);
             this.dispose();
         } else {
-            lb_note.setText("Đăng ký thất bại");
+            lb_note.setText("Sign up fail");
         }
         
     }//GEN-LAST:event_btn_signupActionPerformed

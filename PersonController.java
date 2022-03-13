@@ -36,13 +36,18 @@ public class PersonController {
         return conn.getData(query);
     }
     
+    public ResultSet getByUserId(String username, int id) {
+        String query = "select * from Users where username = '"+username+"' and id<>"+id+"";
+        return conn.getData(query);
+    }
+    
     public void insert(String username, String password, String firstname, String lastname, String gender, String phonenumber, String email) {
         String query = "insert into Users values('"+username+"', '"+password+"', N'"+firstname+"', N'"+lastname+"', '"+gender+"', '"+phonenumber+"', '"+email+"')";
         conn.excute(query);
     }
     
-    public void delete(int username) {
-        String query = "delete from Users where username ='"+username+"'";
+    public void delete(int id) {
+        String query = "delete from Users where id ='"+id+"'";
         conn.excute(query);
     }
     
@@ -79,6 +84,18 @@ public class PersonController {
         int count = 0;
         try {
             ResultSet rs = getByUser(username);
+            while(rs.next()) {
+                count++;
+        }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+    
+    public int countRowbyUserId(String username, int id) {
+        int count = 0;
+        try {
+            ResultSet rs = getByUserId(username, id);
             while(rs.next()) {
                 count++;
         }

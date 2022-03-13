@@ -51,7 +51,8 @@ public class JF_Edit extends javax.swing.JFrame {
                 txt_lastname.setText(rs.getString("lastname"));
                 txt_phonenumber.setText(rs.getString("phonenumber"));
                 txt_email.setText(rs.getString("email"));
-                if(rs.getString("gender") == "male") {
+                String gender = rs.getString("gender");
+                if(gender.equalsIgnoreCase("male")) {
                     rbtn_male.setSelected(true);
                 } else {
                     rbtn_female.setSelected(true);
@@ -86,6 +87,7 @@ public class JF_Edit extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        group_rbtnGender = new javax.swing.ButtonGroup();
         jLabel4 = new javax.swing.JLabel();
         txt_lastname = new javax.swing.JTextField();
         lb_username = new javax.swing.JLabel();
@@ -129,10 +131,12 @@ public class JF_Edit extends javax.swing.JFrame {
 
         lb_email.setText("Email");
 
+        group_rbtnGender.add(rbtn_male);
         rbtn_male.setText("Male");
 
         jLabel3.setText("Last name");
 
+        group_rbtnGender.add(rbtn_female);
         rbtn_female.setText("Female");
         rbtn_female.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -253,7 +257,7 @@ public class JF_Edit extends javax.swing.JFrame {
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
         // TODO add your handling code here:
         get_dataEdit();
-        if(pcl.countRowbyUser(username) == 0) {
+        if(pcl.countRowbyUserId(username, id) == 0) {
             pcl.update(id, username, password, firstname, lastname, gender, phonenumber, email);
             lb_note.setText("Edit user successfully");
         } else {
@@ -280,6 +284,7 @@ public class JF_Edit extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_edit;
+    private javax.swing.ButtonGroup group_rbtnGender;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
